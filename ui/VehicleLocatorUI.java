@@ -1,10 +1,10 @@
 package ui;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import db.Queries;
 import java.awt.*;
 import java.util.List;
-import db.Queries;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class VehicleLocatorUI extends JFrame 
 {
@@ -22,11 +22,20 @@ public class VehicleLocatorUI extends JFrame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Top panel
-        JPanel topPanel = new JPanel(new GridLayout(2, 3, 10, 10));
+        JPanel topPanel = new JPanel(new GridLayout(3, 3, 5, 5));
 
         brandBox = new JComboBox<>();
         modelBox = new JComboBox<>();
         colorBox = new JComboBox<>();
+
+        // Search and close window buttons
+        JButton searchButton = new JButton("Search Inventory");
+        searchButton.setFont(new Font("Georgia", Font.BOLD, 16));
+        searchButton.addActionListener(e -> searchVehicles());
+
+        JButton closeButton = new JButton("Close Window");
+        closeButton.setFont(new Font("Georgia", Font.BOLD, 16));
+        closeButton.addActionListener(e -> dispose());
 
         topPanel.add(new JLabel("Brand:"));
         topPanel.add(new JLabel("Model:"));
@@ -35,17 +44,14 @@ public class VehicleLocatorUI extends JFrame
         topPanel.add(brandBox);
         topPanel.add(modelBox);
         topPanel.add(colorBox);
+        topPanel.add(searchButton);
+        topPanel.add(closeButton);
 
         // Load dropdowns from database
         loadBrands();
         loadColors();
 
         brandBox.addActionListener(e -> loadModels());
-
-        // Search button
-        JButton searchBtn = new JButton("Search Inventory");
-        searchBtn.setFont(new Font("Georgia", Font.BOLD, 16));
-        searchBtn.addActionListener(e -> searchVehicles());
 
         // Table
         resultsTable = new JTable();
@@ -54,7 +60,6 @@ public class VehicleLocatorUI extends JFrame
         // Layout
         setLayout(new BorderLayout(10, 10));
         add(topPanel, BorderLayout.NORTH);
-        add(searchBtn, BorderLayout.CENTER);
         add(scrollPane, BorderLayout.SOUTH);
 
         setVisible(true);

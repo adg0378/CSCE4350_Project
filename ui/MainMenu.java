@@ -32,9 +32,18 @@ public class MainMenu extends JFrame
         salesButton.addActionListener(e -> new SalesUI());
         closeButton.addActionListener(e -> System.exit(0));
 
-        // Layout
+        // Logo Panel
+        JPanel logoPanel = new JPanel();
+        JLabel logoLabel = new JLabel("FakeMax Logo Here", SwingConstants.CENTER);
+        logoLabel.setFont(new Font("Georgia", Font.ITALIC, 20));
+
+        // Logo Layout
+        logoPanel.setLayout(new BorderLayout(10, 10));
+        logoPanel.add(logoLabel, BorderLayout.CENTER);
+
+        // Button Layout
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(4, 1, 10, 10));
+        buttonPanel.setLayout(new GridLayout(1, 4, 20, 20));
         buttonPanel.add(customerButton);
         buttonPanel.add(vehicleButton);
         buttonPanel.add(salesButton);
@@ -43,7 +52,8 @@ public class MainMenu extends JFrame
         // Main Menu layout
         setLayout(new BorderLayout(10, 10));
         add(title, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+        add(logoPanel, BorderLayout.CENTER);
 
         setVisible(true);
     }

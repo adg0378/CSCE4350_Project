@@ -26,10 +26,15 @@ public class SalesUI extends JFrame {
         JButton runBtn = new JButton("Run Report");
         runBtn.setFont(new Font("Arial", Font.BOLD, 16));
         runBtn.addActionListener(e -> runSelectedReport());
+        
+        JButton closeButton = new JButton("Close Window");
+        closeButton.setFont(new Font("Georgia", Font.BOLD, 16));
+        closeButton.addActionListener(e -> dispose());
 
         topPanel.add(new JLabel("Select Report:"));
         topPanel.add(reportBox);
         topPanel.add(runBtn);
+        topPanel.add(closeButton);
 
         // Table
         resultsTable = new JTable();

@@ -22,15 +22,20 @@ public class CustomerUI extends JFrame
 
         // Top panel for brand and model
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(2, 2, 10, 10));
+        topPanel.setLayout(new GridLayout(1, 2, 5, 5));
 
         brandBox = new JComboBox<>();
         modelBox = new JComboBox<>();
+        
+        JButton closeButton = new JButton("Close Window");
+        closeButton.setFont(new Font("Georgia", Font.BOLD, 16));
+        closeButton.addActionListener(e -> dispose());
 
-        topPanel.add(new JLabel("Brand: "));
+        topPanel.add(new JLabel("Brand:"));
         topPanel.add(brandBox);
-        topPanel.add(new JLabel("Model: "));
+        topPanel.add(new JLabel("Model:"));
         topPanel.add(modelBox);
+        topPanel.add(closeButton);
 
         // Load initial data
         loadBrands();
