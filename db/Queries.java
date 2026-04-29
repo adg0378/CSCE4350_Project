@@ -21,10 +21,16 @@ public class Queries
             {
                 brands.add(rs.getString("name"));
             }
+
+            if (brands.isEmpty())
+            {
+                brands.add("No data");
+            }
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in getBrands(): "
+                            + e.getMessage());
         }
 
         return brands;
@@ -53,14 +59,88 @@ public class Queries
             {
                 models.add(rs.getString("name"));
             }
+
+            if (models.isEmpty())
+            {
+                models.add("No data");
+            }
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in getModelsByBrand(): "
+                            + e.getMessage());
         }
 
         return models;
     }
+
+    // Get vehicles based on selected model
+    public static List<String[]> getVehiclesByModel(String modelName) 
+    {
+        List<String[]> results = new ArrayList<>();
+
+        String sql = """
+            SELECT 
+                v.VIN,
+                b.name AS brand,
+                m.name AS model,
+                v.year,
+                c.name AS color,
+                bs.description AS body_style,
+                e.type AS engine,
+                t.type AS transmission,
+                d.name AS dealer,
+                i.status
+            FROM Vehicle v
+            JOIN Model m ON v.model_id = m.model_id
+            JOIN Brand b ON m.brand_id = b.brand_id
+            JOIN Color c ON v.color_id = c.color_id
+            JOIN BodyStyle bs ON v.body_style_id = bs.body_style_id
+            JOIN Engine e ON v.engine_id = e.engine_id
+            JOIN Transmission t ON v.transmission_id = t.transmission_id
+            JOIN Inventory i ON v.VIN = i.VIN
+            JOIN Dealer d ON i.dealer_id = d.dealer_id
+            WHERE m.name = ?
+            ORDER BY d.name, v.year DESC;
+            """;
+
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, modelName);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) 
+            {
+                results.add(new String[]{
+                    rs.getString("VIN"),
+                    rs.getString("brand"),
+                    rs.getString("model"),
+                    rs.getString("year"),
+                    rs.getString("color"),
+                    rs.getString("body_style"),
+                    rs.getString("engine"),
+                    rs.getString("transmission"),
+                    rs.getString("dealer"),
+                    rs.getString("status")
+                });
+            }
+
+            if (results.isEmpty())
+            {
+                results.add(new String[]{"No data"});
+            }
+
+        } 
+        catch (Exception e) 
+        {
+            System.err.println("Database error in getVehiclesByModel(): "
+                            + e.getMessage());
+        }
+        
+        return results;
+    }
+
 
     // Get colors for dropdown
     public static List<String> getColors() 
@@ -77,10 +157,16 @@ public class Queries
             {
                 colors.add(rs.getString("name"));
             }
+
+            if (colors.isEmpty())
+            {
+                colors.add("No data");
+            }
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in getColors(): "
+                            + e.getMessage());
         }
 
         return colors;
@@ -102,10 +188,16 @@ public class Queries
                 styles.add(rs.getString("description"));
             }
 
+            if (styles.isEmpty())
+            {
+                styles.add("No data");
+            }
+
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in getBodyStyles(): "
+                            + e.getMessage());
         }
 
         return styles;
@@ -127,10 +219,16 @@ public class Queries
                 engines.add(rs.getString("type"));
             }
 
+            if (engines.isEmpty())
+            {
+                engines.add("No data");
+            }
+
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in getEngines(): "
+                            + e.getMessage());
         }
 
         return engines;
@@ -199,7 +297,8 @@ public class Queries
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in searchInventory(): "
+                            + e.getMessage());
         }
 
         return results;
@@ -275,7 +374,7 @@ public class Queries
                 EXTRACT(YEAR FROM sale_date) AS year,
                 EXTRACT(MONTH FROM sale_date) AS month,
                 EXTRACT(WEEK FROM sale_date) AS week,
-                SUM(price) AS total_sales
+                COUNT(*) AS units_sold
             FROM Sales
             GROUP BY year, month, week
             ORDER BY year, month, week;
@@ -292,13 +391,14 @@ public class Queries
                         rs.getString("year"),
                         rs.getString("month"),
                         rs.getString("week"),
-                        rs.getString("total_sales")
+                        rs.getString("units_sold")
                     });
             }
         }
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportSalesTrends(): "
+                            + e.getMessage());
         }
         
         return rows;
@@ -332,7 +432,8 @@ public class Queries
         }
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportSalesByGender(): "
+                            + e.getMessage());
         }
         
         return rows;
@@ -372,7 +473,8 @@ public class Queries
         }
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportSalesByIncome(): "
+                            + e.getMessage());
         }
         
         return rows;
@@ -410,7 +512,8 @@ public class Queries
         }
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportTopBrandsByRevenue(): "
+                            + e.getMessage());
         }
         
         return rows;
@@ -448,7 +551,8 @@ public class Queries
         } 
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportTopBrandsByUnits(): "
+                            + e.getMessage());
         }
         
         return rows;
@@ -466,7 +570,7 @@ public class Queries
             FROM Sales s
             JOIN Vehicle v ON s.VIN = v.VIN
             JOIN BodyStyle bs ON v.body_style_id = bs.body_style_id
-            WHERE bs.description = 'Convertible'
+            WHERE bs.description = 'convertible'
             GROUP BY month
             ORDER BY units_sold DESC;
             """;
@@ -485,7 +589,8 @@ public class Queries
         }
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportBestMonthForConvertibles(): "
+                            + e.getMessage());
         }
         
         return rows;
@@ -499,9 +604,11 @@ public class Queries
         String sql = """
             SELECT 
                 d.name AS dealer,
-                AVG(s.sale_date - s.sale_date + 1) AS avg_days
+                AVG(s.sale_date - i.date_arrived) AS avg_days
             FROM Sales s
-            JOIN Dealer d ON s.dealer_id = d.dealer_id
+            JOIN Inventory i ON s.VIN = i.VIN
+            JOIN Dealer d ON i.dealer_id = d.dealer_id
+            WHERE i.date_arrived IS NOT NULL
             GROUP BY d.name
             ORDER BY avg_days DESC;
             """;
@@ -520,7 +627,8 @@ public class Queries
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.err.println("Database error in reportLongestInventoryTime(): "
+                            + e.getMessage());
         }
         
         return rows;

@@ -2,6 +2,7 @@ package ui;
 
 import db.Queries;
 import java.awt.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,10 +23,11 @@ public class CustomerUI extends JFrame
 
         // Top panel for brand and model
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(1, 2, 5, 5));
+        topPanel.setLayout(new GridLayout(2, 3, 10, 10));
 
         brandBox = new JComboBox<>();
         modelBox = new JComboBox<>();
+        modelBox.addItem("Select a brand first");
         
         JButton closeButton = new JButton("Close Window");
         closeButton.setFont(new Font("Georgia", Font.BOLD, 16));
@@ -33,9 +35,10 @@ public class CustomerUI extends JFrame
 
         topPanel.add(new JLabel("Brand:"));
         topPanel.add(brandBox);
+        topPanel.add(closeButton);
         topPanel.add(new JLabel("Model:"));
         topPanel.add(modelBox);
-        topPanel.add(closeButton);
+        topPanel.add(new JLabel(""));
 
         // Load initial data
         loadBrands();
@@ -90,13 +93,20 @@ public class CustomerUI extends JFrame
             return;
         }
 
-        // Simulated data - replace with DB queries
-        String[][] data = {
-            {"1G1ZD5ST3JF100001", selectedModel, "Red", "Automatic", "V6", "2020", "Dallas Auto Mall"},
-            {"1G1ZD5ST3JF100002", selectedModel, "Black", "Manual", "V4", "2021", "McKinney Motors"}
-        };
-        String[] columns = {"VIN", "Model", "Color", "Transmission", "Engine", "Year", "Dealer"};
+        List<String[]> rows = Queries.getVehiclesByModel(selectedModel);
+        
+        String[] columns = {"VIN", "Brand", "Model", "Year",
+                            "Color", "Body Style", "Engine",
+                            "Transmission", "Dealer", "Status"
+                        };
+        
+        DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
 
-        vehicleTable.setModel(new DefaultTableModel(data, columns));
+        for (String[] row : rows)
+        {
+            tableModel.addRow(row);
+        }
+
+        vehicleTable.setModel(tableModel);
     }
 }

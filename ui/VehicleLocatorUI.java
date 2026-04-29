@@ -22,11 +22,15 @@ public class VehicleLocatorUI extends JFrame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Top panel
-        JPanel topPanel = new JPanel(new GridLayout(3, 3, 5, 5));
+        JPanel topPanel = new JPanel(new GridLayout(3, 3, 10, 10));
 
         brandBox = new JComboBox<>();
+
         modelBox = new JComboBox<>();
+        modelBox.addItem("Select a brand first");
+
         colorBox = new JComboBox<>();
+        colorBox.addItem("Select a color");
 
         // Search and close window buttons
         JButton searchButton = new JButton("Search Inventory");
@@ -44,6 +48,7 @@ public class VehicleLocatorUI extends JFrame
         topPanel.add(brandBox);
         topPanel.add(modelBox);
         topPanel.add(colorBox);
+        topPanel.add(new JLabel(""));
         topPanel.add(searchButton);
         topPanel.add(closeButton);
 
@@ -60,7 +65,7 @@ public class VehicleLocatorUI extends JFrame
         // Layout
         setLayout(new BorderLayout(10, 10));
         add(topPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.SOUTH);
+        add(scrollPane, BorderLayout.CENTER);
 
         setVisible(true);
     }
@@ -97,7 +102,6 @@ public class VehicleLocatorUI extends JFrame
     }
 
     // Search vehicles
-
     private void searchVehicles() 
     {
         String brand = (String) brandBox.getSelectedItem();
@@ -115,10 +119,17 @@ public class VehicleLocatorUI extends JFrame
 
         DefaultTableModel modelTable = new DefaultTableModel(columns, 0);
 
-        for (String[] row : rows) {
-            modelTable.addRow(row);
+        if (rows.isEmpty())
+        {
+            modelTable.addRow(new String[]{"No vehicles found"});
         }
-
+        else
+        {
+            for (String[] row : rows) 
+            {
+                modelTable.addRow(row);
+            }
+        }
         resultsTable.setModel(modelTable);
     }
 }

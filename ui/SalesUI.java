@@ -1,10 +1,10 @@
 package ui;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import db.Queries;
 import java.awt.*;
 import java.util.List;
-import db.Queries;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class SalesUI extends JFrame {
 
@@ -19,6 +19,7 @@ public class SalesUI extends JFrame {
 
         // Top panel
         JPanel topPanel = new JPanel(new FlowLayout());
+        topPanel.setLayout(new GridLayout(2, 2, 10, 10));
 
         reportBox = new JComboBox<>();
         loadReports();
@@ -68,10 +69,18 @@ public class SalesUI extends JFrame {
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        for (String[] row : rows) {
-            model.addRow(row);
+        if (rows.isEmpty())
+        {
+            model.addRow(new String[]{"No data"});
         }
-
+        else
+        {
+            for (String[] row : rows) 
+            {
+                model.addRow(row);
+            }
+        }
+        
         resultsTable.setModel(model);
     }
 }

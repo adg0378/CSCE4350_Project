@@ -33,17 +33,16 @@ public class MainMenu extends JFrame
         closeButton.addActionListener(e -> System.exit(0));
 
         // Logo Panel
-        JPanel logoPanel = new JPanel();
-        JLabel logoLabel = new JLabel("FakeMax Logo Here", SwingConstants.CENTER);
-        logoLabel.setFont(new Font("Georgia", Font.ITALIC, 20));
+        JPanel logoPanel = new JPanel(new BorderLayout());
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/ui/images/FakeMaxLogo.png"));
 
-        // Logo Layout
-        logoPanel.setLayout(new BorderLayout(10, 10));
+        // Logo layout
+        JLabel logoLabel = new JLabel(logoIcon, SwingConstants.CENTER);
         logoPanel.add(logoLabel, BorderLayout.CENTER);
 
         // Button Layout
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 4, 20, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 20, 20));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         buttonPanel.add(customerButton);
         buttonPanel.add(vehicleButton);
         buttonPanel.add(salesButton);
