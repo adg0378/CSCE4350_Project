@@ -33,7 +33,7 @@ Plant
 Plant_Part
 
 # Files
-CSCE4350_Project.iml -> presentation and description of the program and interface
+CSCE 4350 Project Presentation.pdf -> presentation and description of the program and interface
 
 Updated ER.pdf -> Updated ER diagram of our project. The diagram imitates the process of selling a vehicle, from sourcing parts, to assembly, to dealership, to inventory, and to final sale to the customer.
 
