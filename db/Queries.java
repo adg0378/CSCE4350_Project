@@ -829,7 +829,7 @@ public class Queries
 
       return var0;
    }
-}
+
 
     //Get customers names
     public static List<String> getCustomers()
