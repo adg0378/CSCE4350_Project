@@ -1,13 +1,14 @@
 package db;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queries 
+public class Queries
 {
     // Methods to retrieve data for dropdowns and tables in the UI
-    public static List<String> getBrands() 
+    public static List<String> getBrands()
     {
         List<String> brands = new ArrayList<>();
 
@@ -17,7 +18,7 @@ public class Queries
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 brands.add(rs.getString("name"));
             }
@@ -26,8 +27,8 @@ public class Queries
             {
                 brands.add("No data");
             }
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in getBrands(): "
                             + e.getMessage());
@@ -37,7 +38,7 @@ public class Queries
     }
 
     // Get models based on selected brand
-    public static List<String> getModelsByBrand(String brandName) 
+    public static List<String> getModelsByBrand(String brandName)
     {
         List<String> models = new ArrayList<>();
 
@@ -55,7 +56,7 @@ public class Queries
             stmt.setString(1, brandName);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) 
+            while (rs.next())
             {
                 models.add(rs.getString("name"));
             }
@@ -64,8 +65,8 @@ public class Queries
             {
                 models.add("No data");
             }
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in getModelsByBrand(): "
                             + e.getMessage());
@@ -75,7 +76,7 @@ public class Queries
     }
 
     // Get vehicles based on selected model
-    public static List<String[]> getVehiclesByModel(String modelName) 
+    public static List<String[]> getVehiclesByModel(String modelName)
     {
         List<String[]> results = new ArrayList<>();
 
@@ -110,7 +111,7 @@ public class Queries
             stmt.setString(1, modelName);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) 
+            while (rs.next())
             {
                 results.add(new String[]{
                     rs.getString("VIN"),
@@ -131,19 +132,19 @@ public class Queries
                 results.add(new String[]{"No data"});
             }
 
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in getVehiclesByModel(): "
                             + e.getMessage());
         }
-        
+
         return results;
     }
 
 
     // Get colors for dropdown
-    public static List<String> getColors() 
+    public static List<String> getColors()
     {
         List<String> colors = new ArrayList<>();
 
@@ -151,9 +152,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 colors.add(rs.getString("name"));
             }
@@ -162,8 +163,8 @@ public class Queries
             {
                 colors.add("No data");
             }
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in getColors(): "
                             + e.getMessage());
@@ -173,7 +174,7 @@ public class Queries
     }
 
     // Get body styles for dropdown
-    public static List<String> getBodyStyles() 
+    public static List<String> getBodyStyles()
     {
         List<String> styles = new ArrayList<>();
 
@@ -181,9 +182,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 styles.add(rs.getString("description"));
             }
@@ -193,8 +194,8 @@ public class Queries
                 styles.add("No data");
             }
 
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in getBodyStyles(): "
                             + e.getMessage());
@@ -204,7 +205,7 @@ public class Queries
     }
 
     // Get engines for dropdown
-    public static List<String> getEngines() 
+    public static List<String> getEngines()
     {
         List<String> engines = new ArrayList<>();
 
@@ -212,9 +213,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 engines.add(rs.getString("type"));
             }
@@ -224,8 +225,8 @@ public class Queries
                 engines.add("No data");
             }
 
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in getEngines(): "
                             + e.getMessage());
@@ -233,9 +234,9 @@ public class Queries
 
         return engines;
     }
-    
+
     // Get cars in inventory based on search criteria
-    public static List<String[]> searchInventory(String brand, String model, String color) 
+    public static List<String[]> searchInventory(String brand, String model, String color)
     {
         List<String[]> results = new ArrayList<>();
 
@@ -267,7 +268,7 @@ public class Queries
             """;
 
         try (Connection conn = Database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) 
+            PreparedStatement stmt = conn.prepareStatement(sql))
         {
             stmt.setString(1, brand);
             stmt.setString(2, model);
@@ -275,9 +276,9 @@ public class Queries
 
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) 
+            while (rs.next())
             {
-                String[] row = 
+                String[] row =
                 {
                     rs.getString("VIN"),
                     rs.getString("brand"),
@@ -294,8 +295,8 @@ public class Queries
                 results.add(row);
             }
 
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in searchInventory(): "
                             + e.getMessage());
@@ -305,9 +306,9 @@ public class Queries
     }
 
     // Report generation methods
-    public static String[] getReportColumns(String reportName) 
+    public static String[] getReportColumns(String reportName)
     {
-        return switch (reportName) 
+        return switch (reportName)
         {
             case "Sales Trends (Year/Month/Week)" ->
                 new String[]{"Year", "Month", "Week", "Total Sales"};
@@ -335,9 +336,9 @@ public class Queries
     }
 
     // Run the selected report and return results
-    public static List<String[]> runReport(String reportName) 
+    public static List<String[]> runReport(String reportName)
     {
-        return switch (reportName) 
+        return switch (reportName)
         {
             case "Sales Trends (Year/Month/Week)" ->
                 reportSalesTrends();
@@ -365,7 +366,7 @@ public class Queries
     }
 
     // Sales by trends report
-    private static List<String[]> reportSalesTrends() 
+    private static List<String[]> reportSalesTrends()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -382,9 +383,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) 
+         ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 rows.add(new String[]
                     {
@@ -395,17 +396,17 @@ public class Queries
                     });
             }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             System.err.println("Database error in reportSalesTrends(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
 
     // Sales by gender report
-    private static List<String[]> reportSalesByGender() 
+    private static List<String[]> reportSalesByGender()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -420,9 +421,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 rows.add(new String[]{
                     rs.getString("gender"),
@@ -430,17 +431,17 @@ public class Queries
                 });
             }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             System.err.println("Database error in reportSalesByGender(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
 
     // Sales by income range report
-    private static List<String[]> reportSalesByIncome() 
+    private static List<String[]> reportSalesByIncome()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -461,7 +462,7 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
             while (rs.next())
             {
@@ -471,17 +472,17 @@ public class Queries
                 });
             }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             System.err.println("Database error in reportSalesByIncome(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
 
     // Top brands by revenue report
-    private static List<String[]> reportTopBrandsByRevenue() 
+    private static List<String[]> reportTopBrandsByRevenue()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -500,9 +501,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 rows.add(new String[]{
                     rs.getString("brand"),
@@ -510,17 +511,17 @@ public class Queries
                 });
             }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             System.err.println("Database error in reportTopBrandsByRevenue(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
 
     // Top brands by units sold report
-    private static List<String[]> reportTopBrandsByUnits() 
+    private static List<String[]> reportTopBrandsByUnits()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -539,27 +540,27 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-            while (rs.next()) 
+            while (rs.next())
             {
                 rows.add(new String[]{
                     rs.getString("brand"),
                     rs.getString("units_sold")
                 });
             }
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             System.err.println("Database error in reportTopBrandsByUnits(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
 
     // Best month for convertibles report
-    private static List<String[]> reportBestMonthForConvertibles() 
+    private static List<String[]> reportBestMonthForConvertibles()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -577,9 +578,9 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
-                while (rs.next()) 
+                while (rs.next())
                 {
                     rows.add(new String[]{
                         rs.getString("month"),
@@ -587,17 +588,17 @@ public class Queries
                     });
                 }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             System.err.println("Database error in reportBestMonthForConvertibles(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
 
     // Dealers with longest inventory time report
-    private static List<String[]> reportLongestInventoryTime() 
+    private static List<String[]> reportLongestInventoryTime()
     {
         List<String[]> rows = new ArrayList<>();
 
@@ -615,7 +616,7 @@ public class Queries
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) 
+            ResultSet rs = stmt.executeQuery())
         {
             while (rs.next())
             {
@@ -630,7 +631,7 @@ public class Queries
             System.err.println("Database error in reportLongestInventoryTime(): "
                             + e.getMessage());
         }
-        
+
         return rows;
     }
     //creates the query for the parts locator menu and creates the suppliers and parts
@@ -828,4 +829,234 @@ public class Queries
 
       return var0;
    }
+}
+
+    //Get customers names
+    public static List<String> getCustomers()
+    {
+        List<String> customers = new ArrayList<>();
+
+        String sql = "SELECT name FROM Customer ORDER BY name";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery())
+        {
+            while (rs.next())
+            {
+                customers.add(rs.getString("name"));
+            }
+
+            if (customers.isEmpty())
+            {
+                customers.add("No data");
+            }
+        }
+        catch (Exception e)
+        {
+            System.err.println("Database error in getCustomers(): "
+                    + e.getMessage());
+        }
+
+        return customers;
+    }
+
+    //Get Dealerships names
+    public static List<String> getDealerships()
+    {
+        List<String> dealerships = new ArrayList<>();
+
+        String sql = "SELECT name FROM Dealer ORDER BY name";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery())
+        {
+            while (rs.next())
+            {
+                dealerships.add(rs.getString("name"));
+            }
+
+            if (dealerships.isEmpty())
+            {
+                dealerships.add("No data");
+            }
+        }
+        catch (Exception e)
+        {
+            System.err.println("Database error in getCustomers(): "
+                    + e.getMessage());
+        }
+
+        return dealerships;
+    }
+
+    //Get Vehicles availables at selected dealership
+    public static List<String> getVehiclesByDealer(String dealerName){
+
+        List<String> vehicles = new ArrayList<>();
+
+        String sql = """ 
+                SELECT m.name
+                FROM Model m
+                JOIN Vehicle v ON v.model_id = m.model_id
+                JOIN Inventory i ON i.VIN = v.VIN
+                JOIN Dealer d ON d.dealer_id = i.dealer_id
+                WHERE d.name = ?
+                    AND i.status = 'Available'
+                ORDER BY m.name
+        """;
+
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+            stmt.setString(1, dealerName);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                vehicles.add(rs.getString("name"));
+            }
+
+            if (vehicles.isEmpty())
+            {
+                vehicles.add("No data");
+            }
+        }
+        catch (Exception e)
+        {
+            System.err.println("Database error in getVehiclesByDealer(): "
+                    + e.getMessage());
+        }
+
+        return vehicles;
+    }
+
+    // Perform purchase: insert into Sales table and update Inventory table
+    public static void purchase(String customer, String dealer, String model, int price){
+
+        String queryIds = """
+                SELECT c.customer_id, d.dealer_id, v.VIN
+                FROM Customer c, Dealer d, Vehicle v
+                JOIN Inventory i ON v.VIN = i.VIN
+                JOIN Model m ON v.model_id = m.model_id
+                WHERE c.name = ?
+                    AND d.name = ?
+                    AND m.name = ?
+                    AND i.dealer_id = (
+                        SELECT dealer_id
+                        FROM Dealer
+                        WHERE name = ?
+                    )
+                    AND i.status = 'Available'
+                LIMIT 1
+                """;
+
+        String insertSale = """
+                INSERT INTO Sales (VIN, dealer_id, customer_id, sale_date, price)
+                VALUES (?, ?, ?, CURRENT_DATE, ?)
+                """;
+
+        String updateInventory = """
+                UPDATE Inventory
+                SET status = 'Sold'
+                WHERE VIN = ?
+                """;
+
+        Connection conn = null;
+
+        try {
+            conn = Database.getConnection();
+            conn.setAutoCommit(false);
+
+            String VIN = "";
+            int customerId = 0;
+            int dealerId = 0;
+
+            try(PreparedStatement stmtId = conn.prepareStatement(queryIds)) {
+                stmtId.setString(1, customer);
+                stmtId.setString(2, dealer);
+                stmtId.setString(3, model);
+                stmtId.setString(4, dealer);
+
+
+                try (ResultSet rs = stmtId.executeQuery()) {
+                    if (rs.next()) {
+                        customerId = rs.getInt("customer_id");
+                        dealerId = rs.getInt("dealer_id");
+                        VIN = rs.getString("VIN");
+                    } else {
+                        throw new Exception("Could not find an available vehicle in this dealership");
+                    }
+                }
+
+                try (PreparedStatement stmtSale = conn.prepareStatement(insertSale)) {
+                    stmtSale.setString(1, VIN);
+                    stmtSale.setInt(2, dealerId);
+                    stmtSale.setInt(3, customerId);
+                    stmtSale.setInt(4, price);
+                    stmtSale.executeUpdate();
+                }
+
+                try (PreparedStatement stmtInv = conn.prepareStatement(updateInventory)) {
+                    stmtInv.setString(1, VIN);
+                    stmtInv.executeUpdate();
+                }
+
+                conn.commit();
+                System.out.println("Sale successful. VIN" + VIN);
+
+            }
+        }
+        catch (Exception e)
+        {
+            if (conn != null) {
+                try {
+                    System.out.println("Transaction rolling back due to: " + e.getMessage());
+                    conn.rollback();
+                }
+                catch (SQLException sqle) {
+                    sqle.printStackTrace();
+                    System.err.println("Database error in purchase(): " + e.getMessage());
+                }
+            }
+        }
+        finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+                catch (SQLException sqle) {
+                    sqle.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //Get customers income
+    public static int getCustomerIncome(String customer) {
+
+        String income = """
+                SELECT income
+                FROM Customer
+                WHERE name = ?
+                """;
+
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(income)) {
+
+            stmt.setString(1, customer);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("income");
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Error getting income: " + e.getMessage());
+        }
+        return 0;
+    }
 }

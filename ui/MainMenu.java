@@ -25,6 +25,8 @@ public class MainMenu extends JFrame
         salesButton.setFont(new Font("Georgia", Font.PLAIN, 16));
         JButton partsButton = new JButton("Parts Locator");
         partsButton.setFont(new Font("Georgia", Font.PLAIN, 16));
+        JButton purchaseButton = new JButton("Purchase Menu");
+        purchaseButton.setFont(new Font("Georgia", Font.PLAIN, 16));
         JButton closeButton = new JButton("Close Program");
         closeButton.setFont(new Font("Georgia", Font.PLAIN, 16));
 
@@ -32,6 +34,7 @@ public class MainMenu extends JFrame
         customerButton.addActionListener(e -> new CustomerUI());
         vehicleButton.addActionListener(e -> new VehicleLocatorUI());
         salesButton.addActionListener(e -> new SalesUI());
+        purchaseButton.addActionListener(e -> new PurchaseUI());
         partsButton.addActionListener(e -> new PartsLocatorUI());
         closeButton.addActionListener(e -> System.exit(0));
 
@@ -49,6 +52,7 @@ public class MainMenu extends JFrame
         buttonPanel.add(customerButton);
         buttonPanel.add(vehicleButton);
         buttonPanel.add(salesButton);
+        buttonPanel.add(purchaseButton);
         buttonPanel.add(partsButton);
         buttonPanel.add(closeButton);
 
