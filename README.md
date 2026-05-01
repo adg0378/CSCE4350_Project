@@ -51,3 +51,6 @@ ui folder -> needs to be added to the IDE or text editor to run the program (MOS
 3. Import and run the SQL schema included in this zip file
 4. Run the program launching MainMenu.java
 
+# Repository Link
+https://github.com/adg0378/CSCE4350_Project
+
