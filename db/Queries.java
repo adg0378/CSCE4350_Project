@@ -633,5 +633,199 @@ public class Queries
         
         return rows;
     }
-    
+    //creates the query for the parts locator menu and creates the suppliers and parts
+    public static List<String[]> searchPartsLocator(String var0, String var1, String var2, String var3) {
+      ArrayList var4 = new ArrayList();
+      String var5 = "    SELECT\n        vp.VIN,\n        c.name AS customer_name,\n        s.sale_date,\n        p.part_type,\n        sup.name AS supplier,\n        vp.date_made\n    FROM Vehicle_Part vp\n    JOIN Part p\n        ON vp.part_id = p.part_id\n    JOIN Supplier sup\n        ON vp.supplier_id = sup.supplier_id\n    JOIN Sales s\n        ON vp.VIN = s.VIN\n    JOIN Customer c\n        ON s.customer_id = c.customer_id\n    WHERE sup.name = ?\n    AND p.part_type = ?\n    AND vp.date_made BETWEEN ?::date AND ?::date\n    ORDER BY vp.VIN\n";
+
+      try {
+         Connection var6 = Database.getConnection();
+
+         try {
+            PreparedStatement var7 = var6.prepareStatement(var5);
+
+            try {
+               var7.setString(1, var0);
+               var7.setString(2, var1);
+               var7.setString(3, var2);
+               var7.setString(4, var3);
+               ResultSet var8 = var7.executeQuery();
+
+               while(var8.next()) {
+                  var4.add(new String[]{var8.getString("VIN"), var8.getString("customer_name"), var8.getString("sale_date"), var8.getString("part_type"), var8.getString("supplier"), var8.getString("date_made")});
+               }
+            } catch (Throwable var12) {
+               if (var7 != null) {
+                  try {
+                     var7.close();
+                  } catch (Throwable var11) {
+                     var12.addSuppressed(var11);
+                  }
+               }
+
+               throw var12;
+            }
+
+            if (var7 != null) {
+               var7.close();
+            }
+         } catch (Throwable var13) {
+            if (var6 != null) {
+               try {
+                  var6.close();
+               } catch (Throwable var10) {
+                  var13.addSuppressed(var10);
+               }
+            }
+
+            throw var13;
+         }
+
+         if (var6 != null) {
+            var6.close();
+         }
+      } catch (Exception var14) {
+         System.err.println("Database error in searchPartsLocator(): " + var14.getMessage());
+      }
+
+      return var4;
+   }
+
+   public static List<String> getSuppliers() {
+      ArrayList var0 = new ArrayList();
+      String var1 = "SELECT name FROM Supplier ORDER BY name";
+
+      try {
+         Connection var2 = Database.getConnection();
+
+         try {
+            PreparedStatement var3 = var2.prepareStatement(var1);
+
+            try {
+               ResultSet var4 = var3.executeQuery();
+
+               try {
+                  while(var4.next()) {
+                     var0.add(var4.getString("name"));
+                  }
+               } catch (Throwable var10) {
+                  if (var4 != null) {
+                     try {
+                        var4.close();
+                     } catch (Throwable var9) {
+                        var10.addSuppressed(var9);
+                     }
+                  }
+
+                  throw var10;
+               }
+
+               if (var4 != null) {
+                  var4.close();
+               }
+            } catch (Throwable var11) {
+               if (var3 != null) {
+                  try {
+                     var3.close();
+                  } catch (Throwable var8) {
+                     var11.addSuppressed(var8);
+                  }
+               }
+
+               throw var11;
+            }
+
+            if (var3 != null) {
+               var3.close();
+            }
+         } catch (Throwable var12) {
+            if (var2 != null) {
+               try {
+                  var2.close();
+               } catch (Throwable var7) {
+                  var12.addSuppressed(var7);
+               }
+            }
+
+            throw var12;
+         }
+
+         if (var2 != null) {
+            var2.close();
+         }
+      } catch (Exception var13) {
+         System.err.println("Database error in getSuppliers(): " + var13.getMessage());
+      }
+
+      return var0;
+   }
+
+   public static List<String> getPartTypes() {
+      ArrayList var0 = new ArrayList();
+      String var1 = "SELECT part_type FROM Part ORDER BY part_type";
+
+      try {
+         Connection var2 = Database.getConnection();
+
+         try {
+            PreparedStatement var3 = var2.prepareStatement(var1);
+
+            try {
+               ResultSet var4 = var3.executeQuery();
+
+               try {
+                  while(var4.next()) {
+                     var0.add(var4.getString("part_type"));
+                  }
+               } catch (Throwable var10) {
+                  if (var4 != null) {
+                     try {
+                        var4.close();
+                     } catch (Throwable var9) {
+                        var10.addSuppressed(var9);
+                     }
+                  }
+
+                  throw var10;
+               }
+
+               if (var4 != null) {
+                  var4.close();
+               }
+            } catch (Throwable var11) {
+               if (var3 != null) {
+                  try {
+                     var3.close();
+                  } catch (Throwable var8) {
+                     var11.addSuppressed(var8);
+                  }
+               }
+
+               throw var11;
+            }
+
+            if (var3 != null) {
+               var3.close();
+            }
+         } catch (Throwable var12) {
+            if (var2 != null) {
+               try {
+                  var2.close();
+               } catch (Throwable var7) {
+                  var12.addSuppressed(var7);
+               }
+            }
+
+            throw var12;
+         }
+
+         if (var2 != null) {
+            var2.close();
+         }
+      } catch (Exception var13) {
+         System.err.println("Database error in getPartTypes(): " + var13.getMessage());
+      }
+
+      return var0;
+   }
 }
