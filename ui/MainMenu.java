@@ -23,8 +23,8 @@ public class MainMenu extends JFrame
         vehicleButton.setFont(new Font("Georgia", Font.PLAIN, 16));
         JButton salesButton = new JButton("Sales Menu");
         salesButton.setFont(new Font("Georgia", Font.PLAIN, 16));
-        JButton var5 = new JButton("Parts Locator");
-        var5.setFont(new Font("Georgia", 0, 16));
+        JButton partsButton = new JButton("Parts Locator");
+        partsButton.setFont(new Font("Georgia", Font.PLAIN, 16));
         JButton closeButton = new JButton("Close Program");
         closeButton.setFont(new Font("Georgia", Font.PLAIN, 16));
 
