@@ -52,7 +52,7 @@ ui folder -> needs to be added to the IDE or text editor to run the program (MOS
     ]
 }
 2. inside Database.java, add the personal password used for the database
-3. Import and run the SQL schema included in this zip file
+3. Import and run the SQL schema included in this zip file ``dealership.sql``
 4. Run the program launching MainMenu.java
 
 # Repository Link
