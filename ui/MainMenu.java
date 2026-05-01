@@ -23,6 +23,8 @@ public class MainMenu extends JFrame
         vehicleButton.setFont(new Font("Georgia", Font.PLAIN, 16));
         JButton salesButton = new JButton("Sales Menu");
         salesButton.setFont(new Font("Georgia", Font.PLAIN, 16));
+        JButton var5 = new JButton("Parts Locator");
+        var5.setFont(new Font("Georgia", 0, 16));
         JButton closeButton = new JButton("Close Program");
         closeButton.setFont(new Font("Georgia", Font.PLAIN, 16));
 
@@ -30,6 +32,7 @@ public class MainMenu extends JFrame
         customerButton.addActionListener(e -> new CustomerUI());
         vehicleButton.addActionListener(e -> new VehicleLocatorUI());
         salesButton.addActionListener(e -> new SalesUI());
+        partsButton.addActionListener(e -> new PartsLocatorUI());
         closeButton.addActionListener(e -> System.exit(0));
 
         // Logo Panel
@@ -41,11 +44,12 @@ public class MainMenu extends JFrame
         logoPanel.add(logoLabel, BorderLayout.CENTER);
 
         // Button Layout
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 20, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 2, 20, 20));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         buttonPanel.add(customerButton);
         buttonPanel.add(vehicleButton);
         buttonPanel.add(salesButton);
+        buttonPanel.add(partsButton);
         buttonPanel.add(closeButton);
 
         // Main Menu layout
