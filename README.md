@@ -1,10 +1,10 @@
 # CSCE4350_Project
 
 # Group 7
-Preethi
-Ryan
+Preethi Chandru
+Ryan Torres
 Alejandro Gonzalez
-Jorge
+Jorge Sandoval
 
 # DESCRIPTION
 FakeMax Dealership is a Java Swing + PostgreSQL application for managing vehicle inventory, customers, and sales.
@@ -26,20 +26,20 @@ Vehicle
 Inventory
 Customer
 Sales
-Part (not actually used - for reference only)
-Supplier (not actually used - for reference only)
-Supplier_Part (not actually used - for reference only)
-Plant (not actually used - for reference only)
-Plant_Part (not actually used - for reference only)
+Part
+Supplier 
+Supplier_Part
+Plant 
+Plant_Part
 
 # Files
-Presentation.pdf -> presentation and description of the program and interface
+CSCE4350_Project.iml -> presentation and description of the program and interface
 
 Updated ER.pdf -> Updated ER diagram of our project. The diagram imitates the process of selling a vehicle, from sourcing parts, to assembly, to dealership, to inventory, and to final sale to the customer.
 
 Development Schedule.xlsx -> The development schedule shows our timeline for when we expect to complete each major aspect of the project.
 
-.vscode foler -> this folder needs to be added to the IDE or text editor to run the program
+.vscode folder -> this folder needs to be added to the IDE or text editor to run the program
 db folder -> needs to be added to the IDE or text editor to run the program
 lib folder -> folder containing the .jar file, the JDBC driver; needs to be added to the IDE or text editor to run the program
 ui folder -> needs to be added to the IDE or text editor to run the program (MOST IMPORTANT FOLDER)
